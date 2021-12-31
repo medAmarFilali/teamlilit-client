@@ -2,16 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap');
-
 .container {
-    @apply w-[90%] mx-auto;
-}
-
-.textfield {
-    @apply p-4 rounded-lg mt-4 w-full;
+    @apply w-[95%] mx-auto
 }
 
 .btn-contained {
-    @apply bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white hover:bg-orange-600 justify-center ;
+    @apply bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white justify-center hover:bg-orange-600 ;
 }

@@ -8,7 +8,7 @@ const Intro = () => {
         <div className="h-full flex items-center justify-between rounded-xl flex-wrap bg-gray-50 rounde-lg ">
           <div className="px-4 w-full md:w-1/2 md:pl-16 ">
             <div className="w-full md:w-[70%]">
-              <h1 className="text-2xl w-full font-semibold md:text-4xl">
+              <h1 className="text-xl w-full text-center md:text-left md:font-semibold md:text-4xl">
                 Reliabe and <span className="text-orange-500">secure</span>{" "}
                 conferencing for everyone
               </h1>
