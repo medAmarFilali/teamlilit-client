@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 
 const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     <div>
@@ -67,7 +67,7 @@ const Header = () => {
               <Link href="/account/login">
                 <a className="text-gray-600">Login</a>
               </Link>
-              <Link href="/">
+              <Link href="/account/signup">
                 <a className="text-gray-600">
                   <div className="bg-orange-500 text-white py-2 px-4 rounded-md flex space-x-2 items-center ">
                     <VideoCameraIcon className="h-5 w-5 text-white leading-none " />

@@ -9,6 +9,7 @@ export const registerUser = (user) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await api.registerUserCall(user);
+      console.log("This is the data from actions", data);
       dispatch({ type: REGISTER_USER, payload: data });
       resolve(data);
     } catch (err) {
