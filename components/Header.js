@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import {
   QuestionMarkCircleIcon,
@@ -6,11 +6,25 @@ import {
   CogIcon,
   VideoCameraIcon,
   MenuIcon,
+  LogoutIcon,
 } from "@heroicons/react/outline";
 import Image from "next/image";
+import { logoutUser } from "../store/actions/authActions";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser());
+      router.reload(window.location.pathname);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
@@ -49,6 +63,9 @@ const Header = () => {
                   <CogIcon className="w-6 h-6 text-gray-500 hover:text-gray-600 " />
                 </a>
               </Link>
+              <button onClick={handleLogout}>
+                <LogoutIcon className="w-6 h-6 text-gray-500 hover:text-gray-600" />
+              </button>
               <Link href="/">
                 <a className="text-gray-600 rounded-full overflow-hidden">
                   <div className="relative w-10 h-10">

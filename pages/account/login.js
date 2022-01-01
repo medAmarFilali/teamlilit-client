@@ -24,7 +24,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await dispatch(loginUser(userData, router));
+      await dispatch(loginUser(userData, router));
     } catch (err) {
       console.log(err);
     }

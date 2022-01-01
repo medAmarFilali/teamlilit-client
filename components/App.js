@@ -6,8 +6,14 @@ const App = ({ Component, pageProps }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    (async () => await dispatch(authenticateUser()))();
-  }, []);
+    (async () => {
+      try {
+        await dispatch(authenticateUser());
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [dispatch]);
 
   return <Component {...pageProps} />;
 };

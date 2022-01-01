@@ -23,7 +23,6 @@ export const loginUser = (user, router) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await api.loginUserCall(user);
-      console.log("This is the data from actions", data);
       dispatch({ type: LOGIN_USER, payload: data });
       router.push("/");
       resolve(data);
