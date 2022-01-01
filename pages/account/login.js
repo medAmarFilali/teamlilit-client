@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Header from "../../components/Header";
 import { produce } from "immer";
 import { loginUser } from "../../store/actions/authActions";
+import { useRouter } from "next/router";
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -10,6 +11,7 @@ const Login = () => {
     password: "",
   });
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleChange = (e) => {
     setUserData(
@@ -22,8 +24,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await dispatch(loginUser(userData));
-      console.log(data);
+      const { data } = await dispatch(loginUser(userData, router));
     } catch (err) {
       console.log(err);
     }

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Header from "../../components/Header";
 import { produce } from "immer";
 import { registerUser } from "../../store/actions/authActions";
+import { useRouter } from "next/router";
 
 const Signup = () => {
   const [userData, setUserData] = useState({
@@ -13,6 +14,7 @@ const Signup = () => {
     role: "client",
   });
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleChange = (e) => {
     setUserData(
@@ -26,7 +28,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      const { data } = await dispatch(registerUser(userData));
+      const { data } = await dispatch(registerUser(userData, router));
       console.log(data);
 
       setUserData({

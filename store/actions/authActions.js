@@ -5,11 +5,12 @@ export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const AUTHENTICATE_USER = "AUTHENTICATE_USER";
 
-export const registerUser = (user) => async (dispatch) => {
+export const registerUser = (user, router) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await api.registerUserCall(user);
       dispatch({ type: REGISTER_USER, payload: data });
+      router.push("/");
       resolve(data);
     } catch (err) {
       console.log(err);
@@ -18,12 +19,13 @@ export const registerUser = (user) => async (dispatch) => {
   });
 };
 
-export const loginUser = (user) => async (dispatch) => {
+export const loginUser = (user, router) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await api.loginUserCall(user);
       console.log("This is the data from actions", data);
       dispatch({ type: LOGIN_USER, payload: data });
+      router.push("/");
       resolve(data);
     } catch (err) {
       console.log(err);
