@@ -47,10 +47,10 @@ export const logoutUser = () => async (dispatch) => {
   });
 };
 
-export const authenticateUser = (user) => async (dispatch) => {
+export const authenticateUser = () => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const { data } = await api.authenticateUserCall(user);
+      const { data } = await api.authenticateUserCall();
       dispatch({ type: AUTHENTICATE_USER, payload: data });
       resolve(data);
     } catch (err) {

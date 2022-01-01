@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSelector } from "react-redux";
 import Link from "next/link";
 import {
   QuestionMarkCircleIcon,
@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 
 const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const auth = useSelector((state) => state.auth);
 
   return (
     <div>
@@ -28,7 +28,7 @@ const Header = () => {
             </a>
           </Link>
         </div>
-        {loggedIn ? (
+        {auth.isAuthenticated ? (
           <>
             <div>
               <MenuIcon className="w-8 h-8 text-gray-800 md:hidden " />
