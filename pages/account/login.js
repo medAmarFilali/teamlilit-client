@@ -10,7 +10,7 @@ const Login = () => {
           <input
             type="text"
             className="p-4 rounded-lg mt-4 w-full "
-            placeholder="Login"
+            placeholder="Username"
           />
           <input
             type="password"

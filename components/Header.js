@@ -52,13 +52,7 @@ const Header = () => {
               <Link href="/">
                 <a className="text-gray-600 rounded-full overflow-hidden">
                   <div className="relative w-10 h-10">
-                    <Image
-                      src="/taxas.jpg"
-                      alt="taxas"
-                      width="15px"
-                      heigh="15px"
-                      layout="fill"
-                    />
+                    <Image src="/taxas.jpg" alt="taxas" layout="fill" />
                   </div>
                 </a>
               </Link>
