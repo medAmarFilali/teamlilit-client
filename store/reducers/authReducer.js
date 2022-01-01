@@ -1,4 +1,8 @@
-import { LOGIN_USER, REGISTER_USER } from "../actions/authActions";
+import {
+  AUTHENTICATE_USER,
+  LOGIN_USER,
+  REGISTER_USER,
+} from "../actions/authActions";
 
 const initState = {
   isAuthenticated: false,
@@ -10,6 +14,8 @@ const authReducer = (state = initState, action) => {
     case REGISTER_USER:
       return action.payload;
     case LOGIN_USER:
+      return action.payload;
+    case AUTHENTICATE_USER:
       return action.payload;
     default:
       return state;
