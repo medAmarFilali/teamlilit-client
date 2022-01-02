@@ -4,12 +4,14 @@ import Header from "../../components/Header";
 import { produce } from "immer";
 import { loginUser } from "../../store/actions/authActions";
 import { useRouter } from "next/router";
+import Loading from "../../components/layout/svg/Loading";
 
 const Login = () => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -23,8 +25,10 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await dispatch(loginUser(userData, router));
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -54,8 +58,9 @@ const Login = () => {
             <button
               type="submit"
               className="btn-contained mt-4 w-full uppercase mb-4 "
+              disabled={loading ? true : false}
             >
-              Login
+              {loading ? <Loading /> : "Login"}
             </button>
           </form>
         </div>

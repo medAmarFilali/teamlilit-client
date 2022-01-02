@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import { produce } from "immer";
 import { registerUser } from "../../store/actions/authActions";
 import { useRouter } from "next/router";
+import Loading from "../../components/layout/svg/Loading";
 
 const Signup = () => {
   const [userData, setUserData] = useState({
@@ -13,6 +14,7 @@ const Signup = () => {
     cpassword: "",
     role: "client",
   });
+  const [loading, setLoading] = useState();
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -26,6 +28,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const { data } = await dispatch(registerUser(userData, router));
@@ -38,8 +41,11 @@ const Signup = () => {
         cpassword: "",
         role: "client",
       });
+
+      setLoading(false);
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -86,7 +92,7 @@ const Signup = () => {
               type="submit"
               className="btn-contained mt-4 w-full uppercase mb-4 "
             >
-              Create account
+              {loading ? <Loading /> : "Create account"}
             </button>
           </form>
         </div>
