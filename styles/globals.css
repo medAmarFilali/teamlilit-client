@@ -9,3 +9,7 @@
 .btn-contained {
     @apply bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white justify-center hover:bg-orange-600 ;
 }
+
+.btn-contained-left {
+    @apply bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white  hover:bg-orange-600 ;
+}

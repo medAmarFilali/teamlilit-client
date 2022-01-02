@@ -1,4 +1,4 @@
-import { VideoCameraIcon } from "@heroicons/react/outline";
+import { LinkIcon, VideoCameraIcon } from "@heroicons/react/outline";
 import Image from "next/image";
 
 const Intro = () => {
@@ -16,16 +16,25 @@ const Intro = () => {
                 Hold incredible events, share knowledge, build and grow your
                 community, create opportunity
               </p>
-              <div className="flex items-center lg:space-x-4 mt-4 flex-wrap ">
-                <button className="bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white ">
+              <div className="flex mt-4 flex-wrap flex-col ">
+                <button className="bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white">
                   <VideoCameraIcon className="h-5 w-5" />
                   <p>New Meeting</p>
                 </button>
-                <input
-                  type="text"
-                  placeholder="New meeting"
-                  className="border focus:outline-none p-4 rounded-md mt-4 lg:mt-0 "
-                />
+                <div className="divide-y mt-4">
+                  <hr />
+                </div>
+                <div className="lg:flex lg:space-x-2 items-center">
+                  <input
+                    type="text"
+                    placeholder="Meeting ID"
+                    className="border focus:outline-none p-4 rounded-md mt-4 w-full lg:w-1/2"
+                  />
+                  <button className="btn-contained-left mt-4 w-full lg:w-1/2">
+                    <LinkIcon className="h-5 w-5" />
+                    <p>Join Meeting</p>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
