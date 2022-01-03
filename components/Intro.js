@@ -1,5 +1,6 @@
 import { LinkIcon, VideoCameraIcon } from "@heroicons/react/outline";
 import Image from "next/image";
+import Link from "next/link";
 
 const Intro = () => {
   return (
@@ -17,10 +18,14 @@ const Intro = () => {
                 community, create opportunity
               </p>
               <div className="flex mt-4 flex-wrap flex-col ">
-                <button className="bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white">
-                  <VideoCameraIcon className="h-5 w-5" />
-                  <p>New Meeting</p>
-                </button>
+                <Link href="/room">
+                  <a>
+                    <button className="bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white">
+                      <VideoCameraIcon className="h-5 w-5" />
+                      <p>New Meeting</p>
+                    </button>
+                  </a>
+                </Link>
                 <div className="divide-y mt-4">
                   <hr />
                 </div>
@@ -30,10 +35,14 @@ const Intro = () => {
                     placeholder="Meeting ID"
                     className="border focus:outline-none p-4 rounded-md mt-4 w-full lg:w-1/2"
                   />
-                  <button className="btn-contained-left mt-4 w-full lg:w-1/2">
-                    <LinkIcon className="h-5 w-5" />
-                    <p>Join Meeting</p>
-                  </button>
+                  <Link href="/waitingRoom">
+                    <a className="mt-4 w-full lg:w-1/2">
+                      <button className="btn-contained-left">
+                        <LinkIcon className="h-5 w-5" />
+                        <p>Join Meeting</p>
+                      </button>
+                    </a>
+                  </Link>
                 </div>
               </div>
             </div>
