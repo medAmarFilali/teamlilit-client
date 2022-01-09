@@ -12,41 +12,53 @@ import {
   VideoCameraIcon,
   XIcon,
 } from "@heroicons/react/outline";
+import { io } from "socket.io-client";
+import SimpleRoomLayout from "../components/roomLayouts/SimpleRoomLayout";
+
+const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER);
 
 const Room = () => {
+  const [me, setMe] = useState("");
   const [stream, setStream] = useState("");
   const [showLinkDialog, setShowLinkDialog] = useState(true);
+  const [call, setCall] = useState({});
+  const [callAccepted, setCallAccepted] = useState(false);
 
-  const selfStream = useRef();
+  const streamRef = {
+    selfStream: useRef(),
+    otherStream: useRef(),
+  };
 
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((stream) => {
         setStream(stream);
-        selfStream.current.srcObject = stream;
+        streamRef.selfStream.current.srcObject = stream;
+        streamRef.otherStream.current.srcObject = stream;
       });
+
+    socket.on("me", (id) => setMe(id));
+
+    socket.on("callUser", ({ from, name: callerName, signal }) => {
+      setCall({ isReceivingCall: true, from, name: callerName, signal });
+    });
   }, []);
+
+  const answerCall = () => {
+    setCallAccepted(true);
+
+    const peer = new Peer({ initiator: false, trickle: false, stream });
+
+    peer.on("signal", (data) => {
+      socket.emit("answerCall", { signal: data, to: call.from });
+    });
+  };
+
   return (
     <div className="bg-gray-800 w-screen h-screen text-white pt-4 px-4 ">
       <div className="rounded-lg overflow-hidden w-[80%] h-[90%] mx-auto  ">
-        {!stream ? (
-          <div className="w-full h-[calc(100vh-80px)] flex items-center justify-center ">
-            <div className="p-8 bg-gray-900 rounded-full ">
-              <UserIcon className="w-12 h-12" />
-            </div>
-          </div>
-        ) : (
-          <>
-            <video
-              playsInline
-              muted
-              ref={selfStream}
-              className="scale-x-[-1] w-full h-[100%] object-cover"
-              autoPlay
-            />
-          </>
-        )}
+        <SimpleRoomLayout ref={streamRef} stream={stream} />
       </div>
       <div className="h-[10%] flex items-center justify-between">
         <div className="flex space-x-4 w-64">
