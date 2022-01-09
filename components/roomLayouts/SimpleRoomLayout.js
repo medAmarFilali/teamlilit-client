@@ -3,19 +3,23 @@ import VideoStream from "../VideoStream";
 
 const SimpleRoomLayout = (props, ref) => {
   return (
-    <div className="flex w-full justify-between ">
-      <VideoStream
-        ref={ref.selfStream}
-        muted={true}
-        className="scale-x-[-1] w-full h-[100%] object-cover"
-        stream={props.stream}
-      />
-      <VideoStream
-        muted={true}
-        className="scale-x-[-1] w-full h-[100%] object-cover"
-        stream={props.stream}
-        ref={ref.otherStream}
-      />
+    <div className="flex w-full flex-col md:flex-row justify-around items-center h-[100%]">
+      <div className="w-[90%] md:w-[42%]">
+        <VideoStream
+          ref={ref.selfStream}
+          muted={true}
+          className="w-[100%] h-[100%]"
+          stream={props.stream}
+        />
+      </div>
+      <div className="w-[90%] md:w-[42%] flex flex-col space-y-10 ">
+        <VideoStream
+          muted={true}
+          className="w-[30%] h-[10%]"
+          stream={props.stream}
+          ref={ref.otherStream}
+        />
+      </div>
     </div>
   );
 };

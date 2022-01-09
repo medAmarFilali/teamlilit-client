@@ -6,6 +6,7 @@ import {
   PhoneIcon,
   PresentationChartLineIcon,
   ShieldCheckIcon,
+  TemplateIcon,
   UserAddIcon,
   UserIcon,
   UsersIcon,
@@ -57,11 +58,11 @@ const Room = () => {
 
   return (
     <div className="bg-gray-800 w-screen h-screen text-white pt-4 px-4 ">
-      <div className="rounded-lg overflow-hidden w-[80%] h-[90%] mx-auto  ">
+      <div className="w-[100%] h-[85%]  md:h-[90%]">
         <SimpleRoomLayout ref={streamRef} stream={stream} />
       </div>
-      <div className="h-[10%] flex items-center justify-between">
-        <div className="flex space-x-4 w-64">
+      <div className="h-[10%] flex flex-col items-center md:flex-row md:items-center md:justify-between">
+        <div className="hidden md:flex space-x-4 w-64">
           <h1 className="text-base">You | ess-ykso-jfy</h1>
         </div>
         <div className="flex space-x-2">
@@ -74,11 +75,14 @@ const Room = () => {
           <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700 ">
             <PresentationChartLineIcon className="w-6 h-6" />
           </button>
+          <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700">
+            <TemplateIcon className="w-6 h-6" />
+          </button>
           <button className="rounded-full bg-red-600 p-3 rotate-[135deg]  hover:bg-red-700 ">
             <PhoneIcon className="w-6 h-6" />
           </button>
         </div>
-        <div className="flex space-x-4 w-64 justify-end ">
+        <div className="hidden md:flex md:space-x-4 md:w-64 md:justify-end ">
           <button>
             <InformationCircleIcon className="w-6 h-6" />
           </button>
