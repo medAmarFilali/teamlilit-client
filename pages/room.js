@@ -8,26 +8,33 @@ import {
   ShieldCheckIcon,
   TemplateIcon,
   UserAddIcon,
-  UserIcon,
   UsersIcon,
   VideoCameraIcon,
   XIcon,
 } from "@heroicons/react/outline";
+import { PhoneIncomingIcon } from "@heroicons/react/solid";
+import { motion } from "framer-motion";
 import { io } from "socket.io-client";
 import SimpleRoomLayout from "../components/roomLayouts/SimpleRoomLayout";
+import { useRouter } from "next/router";
 
 const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER);
 
 const Room = () => {
   const [me, setMe] = useState("");
   const [stream, setStream] = useState("");
+  const [name, setName] = useState("");
   const [showLinkDialog, setShowLinkDialog] = useState(true);
   const [call, setCall] = useState({});
   const [callAccepted, setCallAccepted] = useState(false);
+  const [callEnded, setCallEnded] = useState(false);
+  const [callDialog, setCallDialog] = useState(false);
+  const router = useRouter();
 
   const streamRef = {
     selfStream: useRef(),
     otherStream: useRef(),
+    connectionRef: useRef(),
   };
 
   useEffect(() => {
@@ -54,6 +61,53 @@ const Room = () => {
     peer.on("signal", (data) => {
       socket.emit("answerCall", { signal: data, to: call.from });
     });
+
+    peer.on("stream", (currentStream) => {
+      streamRef.otherStream.current.srcObject = currentStream;
+    });
+
+    peer.signal(call.signal);
+
+    streamRef.connectionRef.current = peer;
+  };
+
+  const callUser = (id) => {
+    const peer = new Peer({ initiator: true, trickle: false, stream });
+
+    peer.on("signal", (data) => {
+      socket.emit("callUser", {
+        userToCall: id,
+        signalData: data,
+        from: me,
+        name,
+      });
+    });
+
+    peer.on("stream", (currentStream) => {
+      streamRef.otherStream.current.srcObject = currentStream;
+    });
+
+    socket.on("callAccepted", (signal) => {
+      setCallAccepted(true);
+
+      peer.signal(signal);
+    });
+
+    streamRef.connectionRef.current = peer;
+  };
+
+  const leaveCall = () => {
+    setCallEnded(true);
+
+    // streamRef.connectionRef.current.destroy();
+    // window.location.reload();
+
+    setStream(false);
+    router.push("/");
+  };
+
+  const showCall = () => {
+    setCallDialog(!callDialog);
   };
 
   return (
@@ -66,7 +120,10 @@ const Room = () => {
           <h1 className="text-base">You | ess-ykso-jfy</h1>
         </div>
         <div className="flex space-x-2">
-          <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700 ">
+          <button
+            className="rounded-full bg-gray-600 p-3 hover:bg-gray-700"
+            onClick={showCall}
+          >
             <MicrophoneIcon className="w-6 h-6" />
           </button>
           <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700 ">
@@ -78,7 +135,10 @@ const Room = () => {
           <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700">
             <TemplateIcon className="w-6 h-6" />
           </button>
-          <button className="rounded-full bg-red-600 p-3 rotate-[135deg]  hover:bg-red-700 ">
+          <button
+            className="rounded-full bg-red-600 p-3 rotate-[135deg]  hover:bg-red-700"
+            onClick={leaveCall}
+          >
             <PhoneIcon className="w-6 h-6" />
           </button>
         </div>
@@ -96,7 +156,10 @@ const Room = () => {
           showLinkDialog ? "block" : "hidden"
         } `}
       >
-        <div className="w-[350px] bg-white rounded-lg shadow-2xl px-6 pt-6 pb-10 text-gray-900 ">
+        <motion.div
+          className="w-[350px] bg-white rounded-lg shadow-2xl px-6 pt-6 pb-10 text-gray-900"
+          whileHover={{ scale: 1.1 }}
+        >
           <div className="flex justify-between items-center ">
             <h1 className="text-lg">Your meeting is ready</h1>
             <button onClick={() => setShowLinkDialog(false)}>
@@ -133,8 +196,28 @@ const Room = () => {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
+      <motion.div
+        animate={callDialog ? { y: 140 } : { y: 0 }}
+        className="rounded-lg bg-white p-4 absolute top-[-120px] right-0 md:right-5 text-gray-900 flex justify-center items-center space-x-6"
+      >
+        <div className="flex space-x-2 items-center">
+          <PhoneIncomingIcon className="text-green-600 w-6 h-6" />
+          <h1 className="leading-none">Midou is Calling</h1>
+        </div>
+        <div className="flex justify-end space-x-4 ">
+          <button onClick={() => setCallDialog(false)}>
+            <p className="text-sm text-red-600 ">Decline</p>
+          </button>
+          <button
+            className="bg-green-600 py-2 px-4 rounded-md"
+            onClick={() => setCallDialog(false)}
+          >
+            <p className="text-sm text-white">Answer</p>
+          </button>
+        </div>
+      </motion.div>
     </div>
   );
 };
