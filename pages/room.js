@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useContext } from "react";
 import {
   DuplicateIcon,
   InformationCircleIcon,
@@ -16,95 +16,15 @@ import { PhoneIncomingIcon } from "@heroicons/react/solid";
 import { motion } from "framer-motion";
 import { io } from "socket.io-client";
 import SimpleRoomLayout from "../components/roomLayouts/SimpleRoomLayout";
-import { useRouter } from "next/router";
+import { SocketContext } from "../context/Context";
 
 const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER);
 
 const Room = () => {
-  const [me, setMe] = useState("");
-  const [stream, setStream] = useState("");
-  const [name, setName] = useState("");
-  const [showLinkDialog, setShowLinkDialog] = useState(true);
-  const [call, setCall] = useState({});
-  const [callAccepted, setCallAccepted] = useState(false);
-  const [callEnded, setCallEnded] = useState(false);
+  const { name, callAccepted, streamRef, callEnded, stream, call, leaveCall } =
+    useContext(SocketContext);
   const [callDialog, setCallDialog] = useState(false);
-  const router = useRouter();
-
-  const streamRef = {
-    selfStream: useRef(),
-    otherStream: useRef(),
-    connectionRef: useRef(),
-  };
-
-  useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        setStream(stream);
-        streamRef.selfStream.current.srcObject = stream;
-        streamRef.otherStream.current.srcObject = stream;
-      });
-
-    socket.on("me", (id) => setMe(id));
-
-    socket.on("callUser", ({ from, name: callerName, signal }) => {
-      setCall({ isReceivingCall: true, from, name: callerName, signal });
-    });
-  }, []);
-
-  const answerCall = () => {
-    setCallAccepted(true);
-
-    const peer = new Peer({ initiator: false, trickle: false, stream });
-
-    peer.on("signal", (data) => {
-      socket.emit("answerCall", { signal: data, to: call.from });
-    });
-
-    peer.on("stream", (currentStream) => {
-      streamRef.otherStream.current.srcObject = currentStream;
-    });
-
-    peer.signal(call.signal);
-
-    streamRef.connectionRef.current = peer;
-  };
-
-  const callUser = (id) => {
-    const peer = new Peer({ initiator: true, trickle: false, stream });
-
-    peer.on("signal", (data) => {
-      socket.emit("callUser", {
-        userToCall: id,
-        signalData: data,
-        from: me,
-        name,
-      });
-    });
-
-    peer.on("stream", (currentStream) => {
-      streamRef.otherStream.current.srcObject = currentStream;
-    });
-
-    socket.on("callAccepted", (signal) => {
-      setCallAccepted(true);
-
-      peer.signal(signal);
-    });
-
-    streamRef.connectionRef.current = peer;
-  };
-
-  const leaveCall = () => {
-    setCallEnded(true);
-
-    // streamRef.connectionRef.current.destroy();
-    // window.location.reload();
-
-    setStream(false);
-    router.push("/");
-  };
+  const [showLinkDialog, setShowLinkDialog] = useState(true);
 
   const showCall = () => {
     setCallDialog(!callDialog);
@@ -156,10 +76,7 @@ const Room = () => {
           showLinkDialog ? "block" : "hidden"
         } `}
       >
-        <motion.div
-          className="w-[350px] bg-white rounded-lg shadow-2xl px-6 pt-6 pb-10 text-gray-900"
-          whileHover={{ scale: 1.1 }}
-        >
+        <motion.div className="w-[350px] bg-white rounded-lg shadow-2xl px-6 pt-6 pb-10 text-gray-900">
           <div className="flex justify-between items-center ">
             <h1 className="text-lg">Your meeting is ready</h1>
             <button onClick={() => setShowLinkDialog(false)}>
