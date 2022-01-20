@@ -21,8 +21,17 @@ import { SocketContext } from "../context/Context";
 const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER);
 
 const Room = () => {
-  const { name, callAccepted, streamRef, callEnded, stream, call, leaveCall } =
-    useContext(SocketContext);
+  const {
+    name,
+    me,
+    callAccepted,
+    streamRef,
+    callEnded,
+    stream,
+    call,
+    leaveCall,
+    answerCall,
+  } = useContext(SocketContext);
   const [callDialog, setCallDialog] = useState(false);
   const [showLinkDialog, setShowLinkDialog] = useState(true);
 
@@ -33,7 +42,7 @@ const Room = () => {
   return (
     <div className="bg-gray-800 w-screen h-screen text-white pt-4 px-4 ">
       <div className="w-[100%] h-[85%]  md:h-[90%]">
-        <SimpleRoomLayout ref={streamRef} stream={stream} />
+        <SimpleRoomLayout ref={streamRef} stream={stream} me={me} />
       </div>
       <div className="h-[10%] flex flex-col items-center md:flex-row md:items-center md:justify-between">
         <div className="hidden md:flex space-x-4 w-64">
@@ -98,7 +107,7 @@ const Room = () => {
               <input
                 type="text"
                 disabled
-                value="https://teamlilit.com/ess-ykso-jfy"
+                value={`${process.env.NEXT_PUBLIC_CLIENT_URL}/waitingRoom?room=${me}`}
                 className="p-4 rounded-lg flex-1 text-xs "
               />
               <button className="p-4 bg-gray-50 rounded-lg ">
@@ -116,7 +125,7 @@ const Room = () => {
         </motion.div>
       </div>
       <motion.div
-        animate={callDialog ? { y: 140 } : { y: 0 }}
+        animate={call.isReceivingCall && !callAccepted ? { y: 140 } : { y: 0 }}
         className="rounded-lg bg-white p-4 absolute top-[-120px] right-0 md:right-5 text-gray-900 flex justify-center items-center space-x-6"
       >
         <div className="flex space-x-2 items-center">
@@ -129,7 +138,7 @@ const Room = () => {
           </button>
           <button
             className="bg-green-600 py-2 px-4 rounded-md"
-            onClick={() => setCallDialog(false)}
+            onClick={() => answerCall()}
           >
             <p className="text-sm text-white">Answer</p>
           </button>

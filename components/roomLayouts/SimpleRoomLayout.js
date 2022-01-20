@@ -1,11 +1,14 @@
-import { forwardRef } from "react";
+import { forwardRef, useContext } from "react";
+import { ContextProvider } from "../../context/Context";
 import VideoStream from "../VideoStream";
 
 const SimpleRoomLayout = (props, ref) => {
-  console.log("This is the stream ref", props.streamRef);
+  const { stream, me } = props;
+  const otherStream = ref.otherStream?.current?.srcObject;
+
   return (
     <div className="flex w-full flex-col md:flex-row justify-around items-center h-[100%]">
-      <div className="w-[90%] md:w-[42%]">
+      <div className={`w-[90%] ${otherStream ? "md:w-[42%]" : "md:w-[42%]"}`}>
         <VideoStream
           ref={ref.selfStream}
           muted={true}
@@ -13,14 +16,18 @@ const SimpleRoomLayout = (props, ref) => {
           stream={props.stream}
         />
       </div>
-      <div className="w-[90%] md:w-[42%] flex flex-col space-y-10 ">
-        <VideoStream
-          muted={true}
-          className="w-[30%] h-[10%]"
-          stream={props.stream}
-          ref={ref.otherStream}
-        />
-      </div>
+      {/* {otherStream && ( */}
+      <>
+        <div className="w-[90%] md:w-[42%] flex flex-col space-y-10 ">
+          <VideoStream
+            muted={true}
+            className="w-[30%] h-[10%]"
+            stream={props.stream}
+            ref={ref.otherStream}
+          />
+        </div>
+      </>
+      {/* )} */}
     </div>
   );
 };

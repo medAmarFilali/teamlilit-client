@@ -28,7 +28,6 @@ const ContextProvider = ({ children }) => {
       .then((stream) => {
         setStream(stream);
         streamRef.selfStream.current.srcObject = stream;
-        // streamRef.otherStream.current.srcObject = stream;
       });
 
     socket.on("me", (id) => setMe(id));
@@ -37,6 +36,8 @@ const ContextProvider = ({ children }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
   }, []);
+
+  console.log("This is the call object", call);
 
   const answerCall = () => {
     setCallAccepted(true);
@@ -54,8 +55,6 @@ const ContextProvider = ({ children }) => {
     peer.signal(call.signal);
 
     streamRef.connectionRef.current = peer;
-
-    setCallDialog(false);
   };
 
   const callUser = (id) => {
