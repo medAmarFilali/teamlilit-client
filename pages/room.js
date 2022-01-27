@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import {
   DuplicateIcon,
   InformationCircleIcon,
@@ -17,6 +17,7 @@ import { motion } from "framer-motion";
 import { io } from "socket.io-client";
 import SimpleRoomLayout from "../components/roomLayouts/SimpleRoomLayout";
 import { SocketContext } from "../context/Context";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER);
 
@@ -28,16 +29,29 @@ const Room = () => {
     streamRef,
     callEnded,
     stream,
+    setStream,
     call,
     leaveCall,
     answerCall,
   } = useContext(SocketContext);
   const [callDialog, setCallDialog] = useState(false);
   const [showLinkDialog, setShowLinkDialog] = useState(true);
+  const [copyId, setCopyId] = useState({
+    copied: false,
+  });
 
   const showCall = () => {
     setCallDialog(!callDialog);
   };
+
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        setStream(stream);
+        streamRef.selfStream.current.srcObject = stream;
+      });
+  }, []);
 
   return (
     <div className="bg-gray-800 w-screen h-screen text-white pt-4 px-4 ">
@@ -110,9 +124,13 @@ const Room = () => {
                 value={`${process.env.NEXT_PUBLIC_CLIENT_URL}/waitingRoom?room=${me}`}
                 className="p-4 rounded-lg flex-1 text-xs "
               />
-              <button className="p-4 bg-gray-50 rounded-lg ">
-                <DuplicateIcon className="w-6 h-6" />
-              </button>
+              <CopyToClipboard
+                text={`${process.env.NEXT_PUBLIC_CLIENT_URL}/waitingRoom?room=${me}`}
+                onCopy={() => setCopyId({ copied: true })}
+                className="p-4 bg-gray-50 rounded-lg w-12 h-12 cursor-pointer "
+              >
+                <DuplicateIcon className="w-12 h-12" />
+              </CopyToClipboard>
             </div>
             <div className="flex items-center space-x-2">
               <ShieldCheckIcon className="w-8 h-8" />

@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import Header from "../components/Header";
+import { io } from "socket.io-client";
 import { SocketContext } from "../context/Context";
 import { useRouter } from "next/router";
 
 const WaitingRoom = () => {
-  const { streamRef, setStream, callUser } = useContext(SocketContext);
+  const { streamRef, setStream, callUser, callAccepted } =
+    useContext(SocketContext);
 
   const router = useRouter();
 
@@ -17,7 +19,7 @@ const WaitingRoom = () => {
         setStream(stream);
         streamRef.selfStream.current.srcObject = stream;
       });
-  }, []);
+  }, [callAccepted]);
 
   const handleCallUser = () => {
     callUser(room);

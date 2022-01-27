@@ -23,21 +23,12 @@ const ContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        setStream(stream);
-        streamRef.selfStream.current.srcObject = stream;
-      });
-
     socket.on("me", (id) => setMe(id));
 
     socket.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
   }, []);
-
-  console.log("This is the call object", call);
 
   const answerCall = () => {
     setCallAccepted(true);
@@ -75,6 +66,7 @@ const ContextProvider = ({ children }) => {
 
     socket.on("callAccepted", (signal) => {
       setCallAccepted(true);
+      router.push("/room");
 
       peer.signal(signal);
     });
@@ -85,8 +77,6 @@ const ContextProvider = ({ children }) => {
   const leaveCall = () => {
     setCallEnded(true);
 
-    // streamRef.connectionRef.destroy();
-    // router.push("/");
     window.location.reload();
   };
 
