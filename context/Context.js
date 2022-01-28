@@ -33,6 +33,8 @@ const ContextProvider = ({ children }) => {
   useEffect(() => {
     socket.on("me", (id) => setMe(id));
 
+    console.log("This is the me from the context", me);
+
     socket.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
