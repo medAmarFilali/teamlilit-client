@@ -60,6 +60,8 @@ const Room = () => {
     }
   }, [callStream]);
 
+  console.log("This is the me ID", me);
+
   return (
     <div className="bg-gray-800 w-screen h-screen text-white pt-4 px-4 ">
       <div className="w-[100%] h-[85%]  md:h-[90%]">
