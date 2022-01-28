@@ -19,8 +19,6 @@ import SimpleRoomLayout from "../components/roomLayouts/SimpleRoomLayout";
 import { SocketContext } from "../context/Context";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER);
-
 const Room = () => {
   const {
     name,
