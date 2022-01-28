@@ -8,10 +8,10 @@ const SocketContext = createContext();
 const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER, {
   // Send auth token on connection, you will need to DI the Auth service above
   // 'query': 'token=' + Auth.getToken()
-  path: "/socket.io",
-  transports: ["websocket", "polling"],
-  enabledTransports: ["ws", "wss"],
-  secure: true,
+  // path: "/socket.io",
+  // transports: ["polling"],
+  // enabledTransports: ["ws", "wss"],
+  // secure: true,
 });
 
 const ContextProvider = ({ children }) => {
