@@ -6,6 +6,10 @@ import Peer from "simple-peer";
 const SocketContext = createContext();
 
 const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER);
+io.connect("/", {
+  secure: true,
+  transports: ["flashsocket", "polling", "websocket"],
+});
 
 const ContextProvider = ({ children }) => {
   const [me, setMe] = useState("");
