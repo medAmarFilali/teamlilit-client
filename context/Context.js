@@ -10,6 +10,7 @@ const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER);
 const ContextProvider = ({ children }) => {
   const [me, setMe] = useState("");
   const [stream, setStream] = useState("");
+  const [callStream, setCallStream] = useState("");
   const [name, setName] = useState("");
   const [call, setCall] = useState({});
   const [callAccepted, setCallAccepted] = useState(false);
@@ -40,7 +41,8 @@ const ContextProvider = ({ children }) => {
     });
 
     peer.on("stream", (currentStream) => {
-      streamRef.otherStream.current.srcObject = currentStream;
+      // streamRef.otherStream.current.srcObject = currentStream;
+      setCallStream(currentStream);
     });
 
     peer.signal(call.signal);
@@ -61,7 +63,8 @@ const ContextProvider = ({ children }) => {
     });
 
     peer.on("stream", (currentStream) => {
-      streamRef.otherStream.current.srcObject = currentStream;
+      setCallStream(currentStream);
+      // streamRef.otherStream.current.srcObject = currentStream;
     });
 
     socket.on("callAccepted", (signal) => {
@@ -86,6 +89,7 @@ const ContextProvider = ({ children }) => {
         call,
         callAccepted,
         streamRef,
+        callStream,
         stream,
         setStream,
         name,

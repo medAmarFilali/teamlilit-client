@@ -26,6 +26,7 @@ const Room = () => {
     name,
     me,
     callAccepted,
+    callStream,
     streamRef,
     callEnded,
     stream,
@@ -53,10 +54,21 @@ const Room = () => {
       });
   }, []);
 
+  useEffect(() => {
+    if (callStream) {
+      streamRef.otherStream.current.srcObject = callStream;
+    }
+  }, [callStream]);
+
   return (
     <div className="bg-gray-800 w-screen h-screen text-white pt-4 px-4 ">
       <div className="w-[100%] h-[85%]  md:h-[90%]">
-        <SimpleRoomLayout ref={streamRef} stream={stream} me={me} />
+        <SimpleRoomLayout
+          ref={streamRef}
+          stream={stream}
+          callStream={callStream}
+          me={me}
+        />
       </div>
       <div className="h-[10%] flex flex-col items-center md:flex-row md:items-center md:justify-between">
         <div className="hidden md:flex space-x-4 w-64">

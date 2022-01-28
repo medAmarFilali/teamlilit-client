@@ -17,6 +17,7 @@ const VideoStream = (props, ref) => {
           muted={props.muted}
           autoPlay
           playsInline
+          data={props.name}
         />
       )}
     </div>
