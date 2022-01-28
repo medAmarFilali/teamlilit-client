@@ -11,6 +11,7 @@ const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER, {
   path: "/socket.io",
   transports: ["websocket"],
   secure: true,
+  withCredentials: true,
 });
 
 const ContextProvider = ({ children }) => {
