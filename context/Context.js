@@ -6,12 +6,12 @@ import Peer from "simple-peer";
 const SocketContext = createContext();
 
 const socket = io(process.env.NEXT_PUBLIC_HOST_SERVER, {
-  // transports: ["websocket"],
   // Send auth token on connection, you will need to DI the Auth service above
   // 'query': 'token=' + Auth.getToken()
-  // path: "/socket.io",
-  // secure: true,
-  // withCredentials: true,
+  path: "/socket.io",
+  transports: ["websocket"],
+  enabledTransports: ["ws", "wss"],
+  secure: true,
 });
 
 const ContextProvider = ({ children }) => {
