@@ -137,7 +137,7 @@ const Room = () => {
                 className="p-4 rounded-lg flex-1 text-xs "
               />
               <CopyToClipboard
-                text={`${process.env.NEXT_PUBLIC_CLIENT_URL}/waitingRoom?room=${me}`}
+                text={`googlechromes://teamlilit-client.vercel.app//waitingRoom?room=${me}`}
                 onCopy={() => setCopyId({ copied: true })}
                 className="p-4 bg-gray-50 rounded-lg w-12 h-12 cursor-pointer "
               >
