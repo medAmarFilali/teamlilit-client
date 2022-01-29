@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import {
@@ -13,9 +14,17 @@ import { logoutUser } from "../store/actions/authActions";
 import { useRouter } from "next/router";
 
 const Header = () => {
+  const [accessToken, setAccessToken] = useState("");
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  useEffect(() => {
+    const theAccessToken = localStorage.getItem("access_token");
+    setAccessToken(theAccessToken);
+  }, []);
+
+  console.log("This is the access token", accessToken);
 
   const handleLogout = async () => {
     try {

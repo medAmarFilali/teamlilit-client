@@ -18,6 +18,7 @@ import SimpleRoomLayout from "../components/roomLayouts/SimpleRoomLayout";
 import { SocketContext } from "../context/Context";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useRouter } from "next/router";
+import withAuth from "../hoc/widthAuth";
 
 const Room = () => {
   const {
@@ -183,4 +184,4 @@ const Room = () => {
   );
 };
 
-export default Room;
+export default withAuth(Room);
