@@ -76,7 +76,7 @@ const ContextProvider = ({ children }) => {
 
     socket.on("callAccepted", (signal) => {
       setCallAccepted(true);
-      router.push("/room");
+      router.push(`/room?id=${id}`);
 
       peer.signal(signal);
     });

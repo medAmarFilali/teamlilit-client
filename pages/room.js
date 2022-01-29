@@ -14,10 +14,10 @@ import {
 } from "@heroicons/react/outline";
 import { PhoneIncomingIcon } from "@heroicons/react/solid";
 import { motion } from "framer-motion";
-import { io } from "socket.io-client";
 import SimpleRoomLayout from "../components/roomLayouts/SimpleRoomLayout";
 import { SocketContext } from "../context/Context";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useRouter } from "next/router";
 
 const Room = () => {
   const {
@@ -38,6 +38,9 @@ const Room = () => {
   const [copyId, setCopyId] = useState({
     copied: false,
   });
+  const router = useRouter();
+
+  const { id: roomId } = router.query ? router.query : "";
 
   const showCall = () => {
     setCallDialog(!callDialog);
@@ -58,7 +61,9 @@ const Room = () => {
     }
   }, [callStream]);
 
-  console.log("This is the me ID", me);
+  const roomLink = roomId
+    ? `${process.env.NEXT_PUBLIC_CLIENT_URL}/waitingRoom?room=${roomId}`
+    : `${process.env.NEXT_PUBLIC_CLIENT_URL}/waitingRoom?room=${me}`;
 
   return (
     <div className="bg-gray-800 w-screen h-screen text-white pt-4 px-4 ">
@@ -133,11 +138,11 @@ const Room = () => {
               <input
                 type="text"
                 disabled
-                value={`${process.env.NEXT_PUBLIC_CLIENT_URL}/waitingRoom?room=${me}`}
+                value={roomLink}
                 className="p-4 rounded-lg flex-1 text-xs "
               />
               <CopyToClipboard
-                text={`googlechromes://teamlilit-client.vercel.app//waitingRoom?room=${me}`}
+                text={roomLink}
                 onCopy={() => setCopyId({ copied: true })}
                 className="p-4 bg-gray-50 rounded-lg w-12 h-12 cursor-pointer "
               >

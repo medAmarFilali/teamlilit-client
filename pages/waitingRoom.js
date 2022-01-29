@@ -38,7 +38,6 @@ const WaitingRoom = () => {
             className="scale-x-[-1] w-full h-full object-cover "
           />
         </div>
-        {/* <video playsInline autoPlay muted ref={streamRef.otherStream} /> */}
         <div className="w-[350px] flex items-center flex-col ">
           <h1 className="text-2xl">Ready to join ?</h1>
           <p>No one else is here</p>
