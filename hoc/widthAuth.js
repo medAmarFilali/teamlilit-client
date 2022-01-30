@@ -1,17 +1,23 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-const withAuth = (WrappedComponent) => {
+import Cookies from "js-cookie";
+
+function withAuth(WrappedComponent) {
+  // eslint-disable-next-line react/display-name
   return (props) => {
     // checks whether we are on client / browser or server.
     if (typeof window !== "undefined") {
       const router = useRouter();
 
-      let accessToken = localStorage.getItem("access_token");
-
-      console.log("This is the access token", accessToken);
+      const accessToken = Cookies.get("access_token");
 
       if (!accessToken) {
-        router.replace("/");
+        let next;
+        next = router.asPath;
+
+        router.push({
+          pathname: "/account/login",
+          query: { next },
+        });
         return null;
       }
 
@@ -20,6 +26,6 @@ const withAuth = (WrappedComponent) => {
 
     return null;
   };
-};
+}
 
 export default withAuth;

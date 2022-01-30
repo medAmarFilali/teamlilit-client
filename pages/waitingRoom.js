@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { io } from "socket.io-client";
 import { SocketContext } from "../context/Context";
 import { useRouter } from "next/router";
+import withAuth from "../hoc/widthAuth";
 
 const WaitingRoom = () => {
   const { streamRef, setStream, callUser, callAccepted } =
@@ -53,4 +54,4 @@ const WaitingRoom = () => {
   );
 };
 
-export default WaitingRoom;
+export default withAuth(WaitingRoom);

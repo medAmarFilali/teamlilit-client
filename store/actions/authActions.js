@@ -19,13 +19,18 @@ export const registerUser = (user, router) => async (dispatch) => {
   });
 };
 
-export const loginUser = (user, router) => async (dispatch) => {
+export const loginUser = (user, router, nextPath) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await api.loginUserCall(user);
-      console.log("Logged In....");
       dispatch({ type: LOGIN_USER, payload: data });
-      router.push("/");
+
+      if (nextPath) {
+        router.push(nextPath);
+      } else {
+        router.push("/");
+      }
+
       resolve(data);
     } catch (err) {
       console.log(err);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Header from "../../components/Header";
 import { produce } from "immer";
@@ -12,8 +12,15 @@ const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const [next, setNext] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
+
+  useEffect(() => {
+    if (router.query) {
+      setNext(router.query.next);
+    }
+  }, []);
 
   const handleChange = (e) => {
     setUserData(
@@ -27,7 +34,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await dispatch(loginUser(userData, router));
+      await dispatch(loginUser(userData, router, next));
       setLoading(false);
     } catch (err) {
       console.log(err);
