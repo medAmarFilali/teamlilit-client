@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import {
+  CogIcon,
   DuplicateIcon,
   InformationCircleIcon,
   MicrophoneIcon,
@@ -19,6 +20,8 @@ import { SocketContext } from "../context/Context";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useRouter } from "next/router";
 import withAuth from "../hoc/widthAuth";
+import { produce } from "immer";
+import SettingsDialog from "../components/SettingsDialog";
 
 const Room = () => {
   const {
@@ -39,22 +42,50 @@ const Room = () => {
   const [copyId, setCopyId] = useState({
     copied: false,
   });
+  const [settingsDialog, setSettingsDialog] = useState(false);
+  const [videoDevices, setVideoDevices] = useState([]);
+  const [videoOptions, setVideoOptions] = useState({
+    audio: true,
+    video: {
+      facingMode: "user",
+      deviceId: "",
+    },
+  });
+
   const router = useRouter();
 
   const { id: roomId } = router.query ? router.query : "";
 
-  const showCall = () => {
-    setCallDialog(!callDialog);
+  const audioToggle = () => {
+    setVideoOptions(
+      produce((draft) => {
+        draft.audio = !draft.audio;
+      })
+    );
+  };
+
+  const videoToggle = () => {
+    setVideoOptions(
+      produce((draft) => {
+        draft.video = !draft.video;
+      })
+    );
   };
 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        setStream(stream);
-        streamRef.selfStream.current.srcObject = stream;
-      });
-  }, []);
+    navigator.mediaDevices.getUserMedia(videoOptions).then((stream) => {
+      setStream(stream);
+      streamRef.selfStream.current.srcObject = stream;
+    });
+
+    (async () => {
+      const allDevices = await navigator.mediaDevices.enumerateDevices();
+      const availableVideo = allDevices.filter(
+        (device) => device.kind === "videoinput"
+      );
+      setVideoDevices(availableVideo);
+    })();
+  }, [videoOptions]);
 
   useEffect(() => {
     if (callStream) {
@@ -82,12 +113,23 @@ const Room = () => {
         </div>
         <div className="flex space-x-2">
           <button
-            className="rounded-full bg-gray-600 p-3 hover:bg-gray-700"
-            onClick={showCall}
+            className={`rounded-full  ${
+              videoOptions.audio
+                ? "bg-gray-600 hover:bg-gray-700"
+                : "bg-red-600 hover:bg-red-700"
+            } p-3 `}
+            onClick={audioToggle}
           >
             <MicrophoneIcon className="w-6 h-6" />
           </button>
-          <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700 ">
+          <button
+            className={`rounded-full  ${
+              videoOptions.video
+                ? "bg-gray-600 hover:bg-gray-700"
+                : "bg-red-600 hover:bg-red-700"
+            } p-3`}
+            onClick={videoToggle}
+          >
             <VideoCameraIcon className="w-6 h-6" />
           </button>
           <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700 ">
@@ -95,6 +137,14 @@ const Room = () => {
           </button>
           <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700">
             <TemplateIcon className="w-6 h-6" />
+          </button>
+          <button
+            className="rounded-full bg-gray-600 p-3 hover:bg-gray-700"
+            onClick={() =>
+              setSettingsDialog((prevState) => (settingsDialog = !prevState))
+            }
+          >
+            <CogIcon className="w-6 h-6" />
           </button>
           <button
             className="rounded-full bg-red-600 p-3 rotate-[135deg]  hover:bg-red-700"
@@ -180,6 +230,14 @@ const Room = () => {
           </button>
         </div>
       </motion.div>
+      {settingsDialog && (
+        <SettingsDialog
+          setSettingsDialog={setSettingsDialog}
+          videoOptions={videoOptions}
+          setVideoOptions={setVideoOptions}
+          videoDevices={videoDevices}
+        />
+      )}
     </div>
   );
 };
