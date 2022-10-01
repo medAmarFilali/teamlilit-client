@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef, useContext } from "react";
 import Header from "../components/Header";
-import { io } from "socket.io-client";
 import { SocketContext } from "../context/Context";
 import { useRouter } from "next/router";
 import withAuth from "../hoc/widthAuth";
+import { CogIcon } from "@heroicons/react/outline";
 
 const WaitingRoom = () => {
   const { streamRef, setStream, callUser, callAccepted } =
@@ -29,17 +29,26 @@ const WaitingRoom = () => {
   return (
     <div>
       <Header />
-      <div className="flex items-center justify-center h-[calc(100vh-80px)]">
-        <div className="rounded-lg overflow-hidden w-[700px] h-[400px] ">
+      <div className="flex items-center justify-center flex-col md:flex-row h-[calc(100vh-80px)]">
+        <div className="relative rounded-lg overflow-hidden w-[80%] mb-8 md:mb-0 md:w-[700px] h-[400px] ">
           <video
             playsInline
             autoPlay
             muted
             ref={streamRef.selfStream}
             className="scale-x-[-1] w-full h-full object-cover "
+            id="video-stream"
           />
+          <div className="absolute bottom-0 p-4 flex justify-between w-full">
+            <button className="border-2 border-white bg-white/20 rounded-full p-2 hover:bg-white/30">
+              <CogIcon className="w-6 h-6 text-white " />
+            </button>
+            <button className="border-2 border-white bg-white/20 rounded-full p-2 hover:bg-white/30">
+              <CogIcon className="w-6 h-6 text-white " />
+            </button>
+          </div>
         </div>
-        <div className="w-[350px] flex items-center flex-col ">
+        <div className="w-full md:w-[350px] flex items-center flex-col ">
           <h1 className="text-2xl">Ready to join ?</h1>
           <p>No one else is here</p>
           <button

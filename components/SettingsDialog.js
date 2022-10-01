@@ -1,4 +1,5 @@
 import { VideoCameraIcon, VolumeUpIcon, XIcon } from "@heroicons/react/outline";
+import AudioTab from "./tabs/AudioTab";
 import VideoTab from "./tabs/VideoTab";
 
 const SettingsDialog = ({
@@ -36,6 +37,10 @@ const SettingsDialog = ({
               videoDevices={videoDevices}
               videoOptions={videoOptions}
             />
+            {/* <AudioTab
+              setVideoOptions={setVideoOptions}
+              videoOptions={videoOptions}
+            /> */}
           </div>
         </div>
       </div>

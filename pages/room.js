@@ -83,6 +83,8 @@ const Room = () => {
       const availableVideo = allDevices.filter(
         (device) => device.kind === "videoinput"
       );
+
+      console.log("This is all the devices", allDevices);
       setVideoDevices(availableVideo);
     })();
   }, [videoOptions]);
@@ -109,7 +111,7 @@ const Room = () => {
       </div>
       <div className="h-[10%] flex flex-col items-center md:flex-row md:items-center md:justify-between">
         <div className="hidden md:flex space-x-4 w-64">
-          <h1 className="text-base">You | ess-ykso-jfy</h1>
+          <h1 className="text-base">You</h1>
         </div>
         <div className="flex space-x-2">
           <button
@@ -132,12 +134,12 @@ const Room = () => {
           >
             <VideoCameraIcon className="w-6 h-6" />
           </button>
-          <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700 ">
+          {/* <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700 ">
             <PresentationChartLineIcon className="w-6 h-6" />
-          </button>
-          <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700">
+          </button> */}
+          {/* <button className="rounded-full bg-gray-600 p-3 hover:bg-gray-700">
             <TemplateIcon className="w-6 h-6" />
-          </button>
+          </button> */}
           <button
             className="rounded-full bg-gray-600 p-3 hover:bg-gray-700"
             onClick={() =>
