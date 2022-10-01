@@ -14,7 +14,6 @@ const authReducer = (state = initState, action) => {
     case REGISTER_USER:
       return action.payload;
     case LOGIN_USER:
-      console.log("User: ", action.payload);
       return action.payload;
     case AUTHENTICATE_USER:
       return action.payload;

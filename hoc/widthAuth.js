@@ -11,6 +11,7 @@ function withAuth(WrappedComponent) {
       const accessToken = Cookies.get("access_token");
 
       if (!accessToken) {
+        console.log("Error no access token");
         let next;
         next = router.asPath;
 

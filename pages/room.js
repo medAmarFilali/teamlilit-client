@@ -5,9 +5,7 @@ import {
   InformationCircleIcon,
   MicrophoneIcon,
   PhoneIcon,
-  PresentationChartLineIcon,
   ShieldCheckIcon,
-  TemplateIcon,
   UserAddIcon,
   UsersIcon,
   VideoCameraIcon,
@@ -25,12 +23,10 @@ import SettingsDialog from "../components/SettingsDialog";
 
 const Room = () => {
   const {
-    name,
     me,
     callAccepted,
     callStream,
     streamRef,
-    callEnded,
     stream,
     setStream,
     call,
@@ -84,7 +80,6 @@ const Room = () => {
         (device) => device.kind === "videoinput"
       );
 
-      console.log("This is all the devices", allDevices);
       setVideoDevices(availableVideo);
     })();
   }, [videoOptions]);
