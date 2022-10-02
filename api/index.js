@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_HOST_SERVER,
   withCredentials: true,
+  baseURL: process.env.NEXT_PUBLIC_HOST_SERVER,
 });
 
 export const registerUserCall = (userData) =>

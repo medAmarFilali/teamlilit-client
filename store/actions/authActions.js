@@ -56,6 +56,7 @@ export const authenticateUser = () => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await api.authenticateUserCall();
+      console.log("Data: ", data);
       dispatch({ type: AUTHENTICATE_USER, payload: data });
       resolve(data);
     } catch (err) {
