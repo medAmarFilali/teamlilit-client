@@ -44,10 +44,10 @@ export const logoutUser = () => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await api.logoutUserCall();
+      localStorage.removeItem("access_token");
       dispatch({ type: LOGOUT_USER, payload: data });
       resolve(data);
     } catch (err) {
-      console.log(err);
       reject(err?.response?.data?.message);
     }
   });
