@@ -13,8 +13,6 @@ const WaitingRoom = () => {
 
   const { room } = router.query;
 
-  console.log("Room: ", room);
-
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
