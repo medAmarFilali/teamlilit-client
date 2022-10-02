@@ -6,7 +6,7 @@ import {
 
 const initState = {
   isAuthenticated: false,
-  user: { username: "", email: "", verifiedEmail: "", role: "" },
+  user: { username: "", email: "", verifiedEmail: "", role: "", token: "" },
 };
 
 const authReducer = (state = initState, action) => {

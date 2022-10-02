@@ -23,6 +23,7 @@ export const loginUser = (user, router, nextPath) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { data } = await api.loginUserCall(user);
+      localStorage.setItem("access_token", data.user.token);
       dispatch({ type: LOGIN_USER, payload: data });
 
       if (nextPath) {
@@ -55,8 +56,8 @@ export const logoutUser = () => async (dispatch) => {
 export const authenticateUser = () => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const { data } = await api.authenticateUserCall();
-      console.log("Data: ", data);
+      const token = { token: localStorage.getItem("access_token") };
+      const { data } = await api.authenticateUserCall(token);
       dispatch({ type: AUTHENTICATE_USER, payload: data });
       resolve(data);
     } catch (err) {

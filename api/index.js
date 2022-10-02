@@ -9,4 +9,5 @@ export const registerUserCall = (userData) =>
   API.post("/user/register", userData);
 export const loginUserCall = (userData) => API.post("/user/login", userData);
 export const logoutUserCall = () => API.post("user/logout");
-export const authenticateUserCall = () => API.post("/user/authenticate");
+export const authenticateUserCall = (token) =>
+  API.post("/user/authenticate", token);

@@ -8,7 +8,13 @@ function withAuth(WrappedComponent) {
     if (typeof window !== "undefined") {
       const router = useRouter();
 
-      const accessToken = Cookies.get("access_token");
+      let accessToken = "";
+
+      if (Cookies.get("access_token")) {
+        accessToken = Cookies.get("access_token");
+      } else {
+        accessToken = localStorage.getItem("access_token");
+      }
 
       if (!accessToken) {
         let next;
