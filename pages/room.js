@@ -167,29 +167,29 @@ const Room = () => {
         </div>
       </div>
       <div
-        className={`absolute top-12 left-12 ${
+        className={`absolute top-2 left-2 md:top-12 md:left-12 ${
           showLinkDialog ? "block" : "hidden"
         } `}
       >
-        <motion.div className="w-[350px] bg-white rounded-lg shadow-2xl px-6 pt-6 pb-10 text-gray-900">
+        <motion.div className="w-full md:w-[350px] bg-white rounded-lg shadow-2xl px-6 pt-6 pb-4 md:pb-10 text-gray-900">
           <div className="flex justify-between items-center ">
             <button onClick={handleBackButton}>
               <ArrowSmLeftIcon className="h-6 w-6" />
             </button>
-            <h1 className="text-lg">Your meeting is ready</h1>
+            <h1 className="text-sm md:text-lg">Your meeting is ready</h1>
             <button onClick={() => setShowLinkDialog(false)}>
               <XIcon className="h-6 w-6" />
             </button>
           </div>
-          <div className="divide-y-2 mt-4">
+          <div className="divide-y-2 mt-2 md:mt-4">
             <hr />
           </div>
           <div>
-            <button className="flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-orange-600 ">
+            <button className="hidden md:flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg mt-4 hover:bg-orange-600 ">
               <UserAddIcon className="h-4 w-4" />
               <p>Add People</p>
             </button>
-            <p className="text-sm mt-4 font-light ">
+            <p className="md:block hidden text-sm mt-4 font-light ">
               Share this link with people that you want in the meeting
             </p>
             <div className="flex items-center space-x-2 my-4 w-full justify-between ">
@@ -207,7 +207,7 @@ const Room = () => {
                 <DuplicateIcon className="w-12 h-12" />
               </CopyToClipboard>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="hidden md:flex items-center space-x-2">
               <ShieldCheckIcon className="w-8 h-8" />
               <p className="text-xs">
                 People who use this meeting link must get your permission before
