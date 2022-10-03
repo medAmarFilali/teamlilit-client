@@ -7,6 +7,7 @@ import {
   VideoCameraIcon,
   MenuIcon,
   LogoutIcon,
+  UserCircleIcon,
 } from "@heroicons/react/outline";
 import Image from "next/image";
 import { logoutUser } from "../store/actions/authActions";
@@ -67,10 +68,15 @@ const Header = () => {
                 <LogoutIcon className="w-6 h-6 text-gray-500 hover:text-gray-600" />
               </button>
               <Link href="/">
-                <a className="text-gray-600 rounded-full overflow-hidden">
-                  <div className="relative w-10 h-10">
+                <a className="text-gray-600 rounded-full overflow-hidden bg-gray-200 ">
+                  <Link href="/">
+                    <a>
+                      <UserCircleIcon className="w-10 h-10 text-gray-400 hover:text-gray-600" />
+                    </a>
+                  </Link>
+                  {/* <div className="relative w-10 h-10">
                     <Image src="/taxas.jpg" alt="taxas" layout="fill" />
-                  </div>
+                  </div> */}
                 </a>
               </Link>
             </div>

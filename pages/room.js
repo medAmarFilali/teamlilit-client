@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import {
+  ArrowSmLeftIcon,
   CogIcon,
   DuplicateIcon,
   InformationCircleIcon,
@@ -52,6 +53,8 @@ const Room = () => {
 
   const { id: roomId } = router.query ? router.query : "";
 
+  console.log("Video options: ", videoOptions);
+
   const audioToggle = () => {
     setVideoOptions(
       produce((draft) => {
@@ -66,6 +69,10 @@ const Room = () => {
         draft.video = !draft.video;
       })
     );
+  };
+
+  const handleBackButton = () => {
+    router.push("/");
   };
 
   useEffect(() => {
@@ -166,6 +173,9 @@ const Room = () => {
       >
         <motion.div className="w-[350px] bg-white rounded-lg shadow-2xl px-6 pt-6 pb-10 text-gray-900">
           <div className="flex justify-between items-center ">
+            <button onClick={handleBackButton}>
+              <ArrowSmLeftIcon className="h-6 w-6" />
+            </button>
             <h1 className="text-lg">Your meeting is ready</h1>
             <button onClick={() => setShowLinkDialog(false)}>
               <XIcon className="h-6 w-6" />
