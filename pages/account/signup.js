@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import { produce } from "immer";
 import { registerUser } from "../../store/actions/authActions";
 import { useRouter } from "next/router";
 import Loading from "../../components/layout/svg/Loading";
+import MobileMenu from "../../components/layout/MobileMenu";
 
 const Signup = () => {
   const [userData, setUserData] = useState({
@@ -17,6 +18,7 @@ const Signup = () => {
   const [loading, setLoading] = useState();
   const dispatch = useDispatch();
   const router = useRouter();
+  const mobileMenu = useSelector((state) => state.menu.mobileMenu);
 
   const handleChange = (e) => {
     setUserData(
@@ -97,6 +99,7 @@ const Signup = () => {
           </form>
         </div>
       </div>
+      {mobileMenu && <MobileMenu />}
     </>
   );
 };

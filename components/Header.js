@@ -32,6 +32,10 @@ const Header = () => {
     }
   };
 
+  const handleRoom = () => {
+    router.push("/room");
+  };
+
   return (
     <div>
       <div className="flex items-center w-100 justify-between container py-4">
@@ -96,13 +100,15 @@ const Header = () => {
                 <a className="text-gray-600">Login</a>
               </Link>
               <Link href="/account/signup">
-                <a className="text-gray-600">
-                  <div className="bg-orange-500 text-white py-2 px-4 rounded-md flex space-x-2 items-center ">
-                    <VideoCameraIcon className="h-5 w-5 text-white leading-none " />
-                    <p className="leading-relaxed">Start a meeting</p>
-                  </div>
-                </a>
+                <a className="text-gray-600">Register</a>
               </Link>
+              <button
+                className="bg-orange-500 text-white py-2 px-4 rounded-md flex space-x-2 items-center"
+                onClick={handleRoom}
+              >
+                <VideoCameraIcon className="h-5 w-5 text-white leading-none " />
+                <p className="leading-relaxed">Start a meeting</p>
+              </button>
             </div>
           </>
         )}

@@ -1,13 +1,30 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { VideoCameraIcon, XIcon } from "@heroicons/react/outline";
 import { closeMenu } from "../../store/actions/menuActions";
-import Link from "next/link";
+import { logoutUser } from "../../store/actions/authActions";
+import { useRouter } from "next/router";
 
 const MobileMenu = () => {
   const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const router = useRouter();
 
   const handleCloseMenu = () => {
     dispatch(closeMenu());
+  };
+  const handleLink = (link) => {
+    dispatch(closeMenu());
+    router.push(link);
+  };
+
+  const handleLogout = async () => {
+    try {
+      dispatch(closeMenu());
+      await dispatch(logoutUser());
+      router.reload(window.location.pathname);
+    } catch (err) {
+      console.log("Error: ", err);
+    }
   };
 
   return (
@@ -22,20 +39,47 @@ const MobileMenu = () => {
       </div>
       <div className="flex justify-center items-center h-[calc(100vh-128px)] ">
         <div className="flex flex-col items-center">
-          <Link href="/account/login">
-            <a className="p-2">
-              <h3>Login</h3>
-            </a>
-          </Link>
-          <Link href="/account/signup">
-            <a className="p-2">
-              <h3>Register</h3>
-            </a>
-          </Link>
-          <button className="btn-contained mt-4">
-            <VideoCameraIcon className="h-5 w-5" />
-            <p>Start new meating</p>
-          </button>
+          {auth.isAuthenticated ? (
+            <>
+              <button
+                className="p-2"
+                onClick={() => handleLink("/account/login")}
+              >
+                Account
+              </button>
+              <button
+                className="p-2"
+                onClick={() => handleLink("/account/login")}
+              >
+                Settings
+              </button>
+              <button
+                className="btn-contained-gray mt-4"
+                onClick={handleLogout}
+              >
+                <p>Logout</p>
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className="p-2"
+                onClick={() => handleLink("/account/login")}
+              >
+                <h3>Login</h3>
+              </button>
+              <button
+                className="p-2"
+                onClick={() => handleLink("/account/signup")}
+              >
+                <h3>Register</h3>
+              </button>
+              <button className="btn-contained mt-4">
+                <VideoCameraIcon className="h-5 w-5" />
+                <p>Start new meating</p>
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

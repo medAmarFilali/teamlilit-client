@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import { produce } from "immer";
 import { loginUser } from "../../store/actions/authActions";
 import { useRouter } from "next/router";
 import Loading from "../../components/layout/svg/Loading";
+import MobileMenu from "../../components/layout/MobileMenu";
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -15,6 +16,7 @@ const Login = () => {
   const [next, setNext] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
+  const mobileMenu = useSelector((state) => state.menu.mobileMenu);
 
   useEffect(() => {
     if (router.query) {
@@ -72,6 +74,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      {mobileMenu && <MobileMenu />}
     </>
   );
 };

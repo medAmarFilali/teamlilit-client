@@ -10,6 +10,10 @@
   @apply bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white justify-center hover:bg-orange-600;
 }
 
+.btn-contained-gray {
+  @apply bg-gray-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white justify-center hover:bg-gray-600;
+}
+
 .btn-contained-left {
   @apply bg-orange-500 p-3 md:mt-0 md:p-4 rounded-md flex space-x-2 items-center text-white  hover:bg-orange-600;
 }
