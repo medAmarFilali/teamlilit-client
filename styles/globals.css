@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 .container {
-    @apply w-[95%] mx-auto
+  @apply w-[95%] mx-auto;
 }
 
 .btn-contained {
-    @apply bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white justify-center hover:bg-orange-600 ;
+  @apply bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white justify-center hover:bg-orange-600;
 }
 
 .btn-contained-left {
-    @apply bg-orange-500 py-4 px-4 rounded-md flex space-x-2 items-center text-white  hover:bg-orange-600 ;
+  @apply bg-orange-500 p-3 md:mt-0 md:p-4 rounded-md flex space-x-2 items-center text-white  hover:bg-orange-600;
 }
 
 .select-label {
-    @apply block mb-2 text-sm font-medium text-gray-900 ;
+  @apply block mb-2 text-sm font-medium text-gray-900;
 }
 
 .select-input {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ;
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
 }

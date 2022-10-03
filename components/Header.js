@@ -12,11 +12,16 @@ import {
 import Image from "next/image";
 import { logoutUser } from "../store/actions/authActions";
 import { useRouter } from "next/router";
+import { openMenu } from "../store/actions/menuActions";
 
 const Header = () => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const handleOpenMenu = () => {
+    dispatch(openMenu());
+  };
 
   const handleLogout = async () => {
     try {
@@ -45,9 +50,9 @@ const Header = () => {
         </div>
         {auth.isAuthenticated ? (
           <>
-            <div>
+            <button onClick={handleOpenMenu}>
               <MenuIcon className="w-8 h-8 text-gray-800 md:hidden " />
-            </div>
+            </button>
             <div className="space-x-4 items-center hidden md:flex">
               <Link href="/">
                 <a className="text-gray-600">
@@ -83,9 +88,9 @@ const Header = () => {
           </>
         ) : (
           <>
-            <div>
+            <button onClick={handleOpenMenu}>
               <MenuIcon className="w-8 h-8 md:hidden" />
-            </div>
+            </button>
             <div className="space-x-4 items-center hidden md:flex ">
               <Link href="/account/login">
                 <a className="text-gray-600">Login</a>
