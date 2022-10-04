@@ -53,8 +53,6 @@ const Room = () => {
 
   const { id: roomId } = router.query ? router.query : "";
 
-  console.log("Video options: ", videoOptions);
-
   const audioToggle = () => {
     setVideoOptions(
       produce((draft) => {

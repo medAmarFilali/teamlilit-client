@@ -1,15 +1,59 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Header from "../components/Header";
 import { SocketContext } from "../context/Context";
 import { useRouter } from "next/router";
 import withAuth from "../hoc/widthAuth";
 import { CogIcon } from "@heroicons/react/outline";
+import { produce } from "immer";
+import SettingsDialog from "../components/SettingsDialog";
 
 const WaitingRoom = () => {
+  const [videoOptions, setVideoOptions] = useState({
+    audio: true,
+    video: {
+      facingMode: "user",
+      deviceId: "",
+    },
+  });
+  const [videoDevices, setVideoDevices] = useState([]);
+  const [settingsDialog, setSettingsDialog] = useState(false);
+
   const { streamRef, setStream, callUser, callAccepted } =
     useContext(SocketContext);
 
   const router = useRouter();
+
+  const audioToggle = () => {
+    setVideoOptions(
+      produce((draft) => {
+        draft.audio = !draft.audio;
+      })
+    );
+  };
+
+  const videoToggle = () => {
+    setVideoOptions(
+      produce((draft) => {
+        draft.video = !draft.video;
+      })
+    );
+  };
+
+  useEffect(() => {
+    navigator.mediaDevices.getUserMedia(videoOptions).then((stream) => {
+      setStream(stream);
+      streamRef.selfStream.current.srcObject = stream;
+    });
+
+    (async () => {
+      const allDevices = await navigator.mediaDevices.enumerateDevices();
+      const availableVideo = allDevices.filter(
+        (device) => device.kind === "videoinput"
+      );
+
+      setVideoDevices(availableVideo);
+    })();
+  }, [videoOptions]);
 
   const { room } = router.query;
 
@@ -40,12 +84,15 @@ const WaitingRoom = () => {
             id="video-stream"
           />
           <div className="absolute bottom-0 p-4 flex justify-between w-full">
-            <button className="border-2 border-white bg-white/20 rounded-full p-2 hover:bg-white/30">
+            <button
+              onClick={() => setSettingsDialog(true)}
+              className="border-2 border-white bg-white/20 rounded-full p-2 hover:bg-white/30"
+            >
               <CogIcon className="w-6 h-6 text-white " />
             </button>
-            <button className="border-2 border-white bg-white/20 rounded-full p-2 hover:bg-white/30">
+            {/* <button className="border-2 border-white bg-white/20 rounded-full p-2 hover:bg-white/30">
               <CogIcon className="w-6 h-6 text-white " />
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="w-full md:w-[350px] flex items-center flex-col ">
@@ -59,6 +106,14 @@ const WaitingRoom = () => {
           </button>
         </div>
       </div>
+      {settingsDialog && (
+        <SettingsDialog
+          setSettingsDialog={setSettingsDialog}
+          videoOptions={videoOptions}
+          setVideoOptions={setVideoOptions}
+          videoDevices={videoDevices}
+        />
+      )}
     </div>
   );
 };
