@@ -39,13 +39,13 @@ const Header = () => {
   return (
     <div>
       <div className="flex items-center w-100 justify-between container py-4">
-        <div className="w-[121px] h-[32px] ">
+        <div className="w-[196px] h-[40px] ">
           <Link href="/">
             <a>
               <Image
                 src="/logo.png"
-                width="121px"
-                height="32px"
+                width="196px"
+                height="40px"
                 layout="responsive"
                 alt="teamlilit logo"
               />
@@ -58,7 +58,7 @@ const Header = () => {
               <MenuIcon className="w-8 h-8 text-gray-800 md:hidden " />
             </button>
             <div className="space-x-4 items-center hidden md:flex">
-              <Link href="/">
+              {/* <Link href="/">
                 <a className="text-gray-600">
                   <QuestionMarkCircleIcon className="w-6 h-6 text-gray-500 hover:text-gray-600 " />
                 </a>
@@ -67,8 +67,8 @@ const Header = () => {
                 <a className="text-gray-600">
                   <AnnotationIcon className="w-6 h-6 text-gray-500 hover:text-gray-600 " />
                 </a>
-              </Link>
-              <Link href="/">
+              </Link> */}
+              <Link href="/account/Settings">
                 <a className="text-gray-600">
                   <CogIcon className="w-6 h-6 text-gray-500 hover:text-gray-600 " />
                 </a>

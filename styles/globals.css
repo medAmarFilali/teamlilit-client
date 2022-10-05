@@ -18,6 +18,18 @@
   @apply bg-orange-500 p-3 md:mt-0 md:p-4 rounded-md flex space-x-2 items-center text-white  hover:bg-orange-600;
 }
 
+.tm-input-group {
+  @apply flex flex-col mt-4;
+}
+
+.tm-label {
+  @apply text-gray-500 text-sm font-medium mb-2;
+}
+
+.tm-input {
+  @apply bg-white border border-gray-200 focus:outline-none  text-base px-4 py-2 rounded-md text-gray-700 focus:ring-2 focus:ring-orange-500;
+}
+
 .select-label {
   @apply block mb-2 text-sm font-medium text-gray-900;
 }
