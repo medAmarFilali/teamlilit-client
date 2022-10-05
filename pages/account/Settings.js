@@ -1,8 +1,6 @@
-import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
-import ProfileImage from "../../components/ProfileImage";
-import UploadImage from "../../components/UploadImage";
 import withAuth from "../../hoc/widthAuth";
 import { getProfile, updateProfile } from "../../store/actions/userActions";
 
@@ -10,8 +8,14 @@ const Settings = () => {
   const [familyName, setFamilyName] = useState("");
   const [givenName, setGivenName] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  const profileInfo = useSelector((state) => state.user);
   const imageInputRef = useRef();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setFamilyName(profileInfo.familyName);
+    setGivenName(profileInfo.givenName);
+  }, [profileInfo]);
 
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
