@@ -13,8 +13,8 @@ const Settings = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setFamilyName(profileInfo.familyName);
-    setGivenName(profileInfo.givenName);
+    setFamilyName(profileInfo.familyName ? profileInfo.familyName : "");
+    setGivenName(profileInfo.givenName ? profileInfo.givenName : "");
   }, [profileInfo]);
 
   const handleImageChange = (e) => {

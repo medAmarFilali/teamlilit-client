@@ -22,9 +22,10 @@ export const updateProfile = (profileData) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
       const token = localStorage.getItem("access_token");
+
       const { data } = await api.updateUserInfo({ ...profileData, token });
 
-      dispatch({ type: UPDATE_PROFILE, payload: data.profileData });
+      dispatch({ type: UPDATE_PROFILE, payload: data.profileInfo });
       resolve(data);
     } catch (err) {
       console.log("User error: ", err);
