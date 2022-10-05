@@ -100,7 +100,7 @@ const Room = () => {
     : `${process.env.NEXT_PUBLIC_CLIENT_URL}/waitingRoom?room=${me}`;
 
   return (
-    <div className="bg-gray-800 w-screen h-screen text-white pt-4 px-4 ">
+    <div className="bg-white w-screen h-screen text-white pt-4 px-4 ">
       <div className="w-[100%] h-[85%]  md:h-[90%]">
         <SimpleRoomLayout
           ref={streamRef}
