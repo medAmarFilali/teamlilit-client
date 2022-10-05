@@ -48,6 +48,7 @@ const Header = () => {
                 height="40px"
                 layout="responsive"
                 alt="teamlilit logo"
+                priority
               />
             </a>
           </Link>
@@ -58,16 +59,6 @@ const Header = () => {
               <MenuIcon className="w-8 h-8 text-gray-800 md:hidden " />
             </button>
             <div className="space-x-4 items-center hidden md:flex">
-              {/* <Link href="/">
-                <a className="text-gray-600">
-                  <QuestionMarkCircleIcon className="w-6 h-6 text-gray-500 hover:text-gray-600 " />
-                </a>
-              </Link>
-              <Link href="/">
-                <a className="text-gray-600">
-                  <AnnotationIcon className="w-6 h-6 text-gray-500 hover:text-gray-600 " />
-                </a>
-              </Link> */}
               <Link href="/account/Settings">
                 <a className="text-gray-600">
                   <CogIcon className="w-6 h-6 text-gray-500 hover:text-gray-600 " />
@@ -78,14 +69,7 @@ const Header = () => {
               </button>
               <Link href="/">
                 <a className="text-gray-600 rounded-full overflow-hidden bg-gray-200 ">
-                  <Link href="/">
-                    <a>
-                      <UserCircleIcon className="w-10 h-10 text-gray-400 hover:text-gray-600" />
-                    </a>
-                  </Link>
-                  {/* <div className="relative w-10 h-10">
-                    <Image src="/taxas.jpg" alt="taxas" layout="fill" />
-                  </div> */}
+                  <UserCircleIcon className="w-10 h-10 text-gray-400 hover:text-gray-600" />
                 </a>
               </Link>
             </div>

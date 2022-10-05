@@ -11,3 +11,6 @@ export const loginUserCall = (userData) => API.post("/user/login", userData);
 export const logoutUserCall = () => API.post("user/logout");
 export const authenticateUserCall = (token) =>
   API.post("/user/authenticate", token);
+export const updateUserInfo = (profileData) =>
+  API.post("/user/update", profileData);
+export const getUserInfo = (token) => API.post("/user/info", { token });

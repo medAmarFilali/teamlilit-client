@@ -1,15 +1,39 @@
 import { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import Header from "../../components/Header";
+import ProfileImage from "../../components/ProfileImage";
+import UploadImage from "../../components/UploadImage";
 import withAuth from "../../hoc/widthAuth";
+import { getProfile, updateProfile } from "../../store/actions/userActions";
 
 const Settings = () => {
+  const [familyName, setFamilyName] = useState("");
+  const [givenName, setGivenName] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const imageInputRef = useRef();
+  const dispatch = useDispatch();
 
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       const imageFile = URL.createObjectURL(e.target.files[0]);
       setProfileImage(imageFile);
+    }
+  };
+
+  const handleProfileSubmit = async () => {
+    try {
+      await dispatch(updateProfile({ familyName, givenName }));
+    } catch (err) {
+      console.log("err");
+    }
+  };
+
+  const handlePasswordChange = async () => {
+    console.log("Clicked!!!");
+    try {
+      await dispatch(getProfile());
+    } catch (err) {
+      console.log("err", err);
     }
   };
 
@@ -23,59 +47,11 @@ const Settings = () => {
             <div className="mt-4 flex">
               <div className="w-full md:w-[48%]">
                 <h1 className="text-lg text-gray-600">Account</h1>
-                <div>
-                  {/* upload profile picture */}
-                  <div className="mt-4">
-                    <h1 className="text-sm text-gray-600">Profile Picture</h1>
-                    <div className="mt-2">
-                      <div className="relative w-20 h-20">
-                        {profileImage ? (
-                          <img
-                            src={profileImage}
-                            alt=""
-                            className="w-full h-full rounded-full object-cover"
-                          />
-                        ) : (
-                          <img
-                            src="../profileimage.jpg"
-                            alt=""
-                            className="w-full h-full rounded-full object-cover"
-                          />
-                        )}
-                        <div className="absolute bottom-0 right-0">
-                          <button
-                            className="bg-white rounded-full p-1"
-                            onClick={() => imageInputRef.current.click()}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-6 w-6 text-gray-600"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        name=""
-                        id=""
-                        className="hidden"
-                        ref={imageInputRef}
-                        onChange={handleImageChange}
-                      />
-                    </div>
-                  </div>
-                </div>
+                {/* <UploadImage
+                  profileImage={profileImage}
+                  imageInputRef={imageInputRef}
+                  handleImageChange={handleImageChange}
+                /> */}
                 <div className="tm-input-group w-full md:w-[350px]">
                   <label htmlFor="familyname" className="tm-label">
                     Family name
@@ -85,6 +61,8 @@ const Settings = () => {
                     className="tm-input"
                     id="familyname"
                     name="familyname"
+                    value={familyName}
+                    onChange={(e) => setFamilyName(e.target.value)}
                   />
                 </div>
                 <div className="tm-input-group w-full md:w-[350px]">
@@ -97,9 +75,16 @@ const Settings = () => {
                     id="name"
                     name="name"
                     autoComplete="off"
+                    value={givenName}
+                    onChange={(e) => setGivenName(e.target.value)}
                   />
                 </div>
-                <button className="btn-contained mt-4">Comfirm</button>
+                <button
+                  className="btn-contained mt-4"
+                  onClick={handleProfileSubmit}
+                >
+                  Comfirm
+                </button>
               </div>
               <div className="w-full md:w-[48%]">
                 <h1 className="text-lg text-gray-600">Password</h1>
@@ -137,7 +122,12 @@ const Settings = () => {
                     name="cnewpassword"
                   />
                 </div>
-                <button className="btn-contained mt-4">Update password</button>
+                <button
+                  className="btn-contained mt-4"
+                  onClick={handlePasswordChange}
+                >
+                  Update password
+                </button>
               </div>
             </div>
           </div>
