@@ -9,8 +9,6 @@ const VideoTab = ({ videoDevices, setVideoOptions, videoOptions }) => {
     );
   };
 
-  console.log("This is the video options", videoOptions);
-
   return (
     <div>
       <div>

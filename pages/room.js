@@ -44,6 +44,7 @@ const Room = () => {
   const [videoOptions, setVideoOptions] = useState({
     audio: true,
     video: {
+      enabled: true,
       facingMode: "user",
       deviceId: "",
     },
@@ -64,7 +65,7 @@ const Room = () => {
   const videoToggle = () => {
     setVideoOptions(
       produce((draft) => {
-        draft.video = !draft.video;
+        draft.video.enabled = !draft.video.enabled;
       })
     );
   };
@@ -75,8 +76,10 @@ const Room = () => {
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia(videoOptions).then((stream) => {
-      setStream(stream);
-      streamRef.selfStream.current.srcObject = stream;
+      if (videoOptions.video.enabled) {
+        setStream(stream);
+        streamRef.selfStream.current.srcObject = stream;
+      }
     });
 
     (async () => {
@@ -106,6 +109,7 @@ const Room = () => {
           ref={streamRef}
           stream={stream}
           callStream={callStream}
+          videoOptions={videoOptions}
           me={me}
         />
       </div>
@@ -126,7 +130,7 @@ const Room = () => {
           </button>
           <button
             className={`rounded-full  ${
-              videoOptions.video
+              videoOptions.video.enabled
                 ? "bg-gray-600 hover:bg-gray-700"
                 : "bg-red-600 hover:bg-red-700"
             } p-3`}
