@@ -61,7 +61,6 @@ export const authenticateUser = () => async (dispatch) => {
       dispatch({ type: AUTHENTICATE_USER, payload: data });
       resolve(data);
     } catch (err) {
-      console.log(err);
       reject(err?.response?.data?.message);
     }
   });

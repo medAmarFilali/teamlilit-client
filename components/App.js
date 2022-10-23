@@ -24,7 +24,7 @@ const App = ({ Component, pageProps }) => {
         console.log(err);
       }
     })();
-  }, []);
+  }, [dispatch]);
 
   return <Component {...pageProps} />;
 };

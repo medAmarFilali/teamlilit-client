@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/Header";
 import withAuth from "../../hoc/widthAuth";
 import { getProfile, updateProfile } from "../../store/actions/userActions";
+import UploadImage from "../../components/UploadImage";
 
 const Settings = () => {
   const [familyName, setFamilyName] = useState("");
@@ -13,8 +14,14 @@ const Settings = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setFamilyName(profileInfo.familyName ? profileInfo.familyName : "");
-    setGivenName(profileInfo.givenName ? profileInfo.givenName : "");
+    dispatch(getProfile());
+  }, []);
+
+  useEffect(() => {
+    if (profileInfo && Object.keys(profileInfo).length !== 0) {
+      setFamilyName(profileInfo.familyName);
+      setGivenName(profileInfo.givenName);
+    }
   }, [profileInfo]);
 
   const handleImageChange = (e) => {
@@ -33,7 +40,6 @@ const Settings = () => {
   };
 
   const handlePasswordChange = async () => {
-    console.log("Clicked!!!");
     try {
       await dispatch(getProfile());
     } catch (err) {
@@ -42,7 +48,7 @@ const Settings = () => {
   };
 
   return (
-    <>
+    <div>
       <Header />
       <div className="container">
         <div className="h-[calc(100vh-64px)] w-full flex justify-center">
@@ -51,11 +57,6 @@ const Settings = () => {
             <div className="mt-4 flex">
               <div className="w-full md:w-[48%]">
                 <h1 className="text-lg text-gray-600">Account</h1>
-                {/* <UploadImage
-                  profileImage={profileImage}
-                  imageInputRef={imageInputRef}
-                  handleImageChange={handleImageChange}
-                /> */}
                 <div className="tm-input-group w-full md:w-[350px]">
                   <label htmlFor="familyname" className="tm-label">
                     Family name
@@ -137,7 +138,7 @@ const Settings = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
