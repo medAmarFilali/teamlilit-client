@@ -11,6 +11,7 @@ const WaitingRoom = () => {
   const [videoOptions, setVideoOptions] = useState({
     audio: true,
     video: {
+      enabled: true,
       facingMode: "user",
       deviceId: "",
     },
@@ -34,7 +35,7 @@ const WaitingRoom = () => {
   const videoToggle = () => {
     setVideoOptions(
       produce((draft) => {
-        draft.video = !draft.video;
+        draft.video.enabled = !draft.video.enabled;
       })
     );
   };

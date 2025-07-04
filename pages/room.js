@@ -119,21 +119,19 @@ const Room = () => {
         </div>
         <div className="flex space-x-2">
           <button
-            className={`rounded-full  ${
-              videoOptions.audio
+            className={`rounded-full  ${videoOptions.audio
                 ? "bg-gray-600 hover:bg-gray-700"
                 : "bg-red-600 hover:bg-red-700"
-            } p-3 `}
+              } p-3 `}
             onClick={audioToggle}
           >
             <MicrophoneIcon className="w-6 h-6" />
           </button>
           <button
-            className={`rounded-full  ${
-              videoOptions.video.enabled
+            className={`rounded-full  ${videoOptions.video.enabled
                 ? "bg-gray-600 hover:bg-gray-700"
                 : "bg-red-600 hover:bg-red-700"
-            } p-3`}
+              } p-3`}
             onClick={videoToggle}
           >
             <VideoCameraIcon className="w-6 h-6" />
@@ -147,7 +145,7 @@ const Room = () => {
           <button
             className="rounded-full bg-gray-600 p-3 hover:bg-gray-700"
             onClick={() =>
-              setSettingsDialog((prevState) => (settingsDialog = !prevState))
+              setSettingsDialog((prevState) => !prevState)
             }
           >
             <CogIcon className="w-6 h-6" />
@@ -169,9 +167,8 @@ const Room = () => {
         </div>
       </div>
       <div
-        className={`absolute top-2 left-2 md:top-12 md:left-12 ${
-          showLinkDialog ? "block" : "hidden"
-        } `}
+        className={`absolute top-2 left-2 md:top-12 md:left-12 ${showLinkDialog ? "block" : "hidden"
+          } `}
       >
         <motion.div className="w-full md:w-[350px] bg-white rounded-lg shadow-2xl px-6 pt-6 pb-4 md:pb-10 text-gray-900">
           <div className="flex justify-between items-center ">
