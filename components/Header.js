@@ -40,17 +40,14 @@ const Header = () => {
     <div>
       <div className="flex items-center w-100 justify-between container py-4">
         <div className="w-[196px] h-[40px] ">
-          <Link href="/">
-            <a>
-              <Image
-                src="/logo.png"
-                width="196px"
-                height="40px"
-                layout="responsive"
-                alt="teamlilit logo"
-                priority
-              />
-            </a>
+          <Link href="/" className="block">
+            <Image
+              src="/logo.png"
+              width={196}
+              height={40}
+              alt="teamlilit logo"
+              priority
+            />
           </Link>
         </div>
         {auth.isAuthenticated ? (
@@ -59,18 +56,14 @@ const Header = () => {
               <MenuIcon className="w-8 h-8 text-gray-800 md:hidden " />
             </button>
             <div className="space-x-4 items-center hidden md:flex">
-              <Link href="/account/Settings">
-                <a className="text-gray-600">
-                  <CogIcon className="w-6 h-6 text-gray-500 hover:text-gray-600 " />
-                </a>
+              <Link href="/account/Settings" className="text-gray-600">
+                <CogIcon className="w-6 h-6 text-gray-500 hover:text-gray-600 " />
               </Link>
               <button onClick={handleLogout}>
                 <LogoutIcon className="w-6 h-6 text-gray-500 hover:text-gray-600" />
               </button>
-              <Link href="/">
-                <a className="text-gray-600 rounded-full overflow-hidden bg-gray-200 ">
-                  <UserCircleIcon className="w-10 h-10 text-gray-400 hover:text-gray-600" />
-                </a>
+              <Link href="/" className="text-gray-600 rounded-full overflow-hidden bg-gray-200 ">
+                <UserCircleIcon className="w-10 h-10 text-gray-400 hover:text-gray-600" />
               </Link>
             </div>
           </>
@@ -80,12 +73,8 @@ const Header = () => {
               <MenuIcon className="w-8 h-8 md:hidden" />
             </button>
             <div className="space-x-4 items-center hidden md:flex ">
-              <Link href="/account/login">
-                <a className="text-gray-600">Login</a>
-              </Link>
-              <Link href="/account/signup">
-                <a className="text-gray-600">Register</a>
-              </Link>
+              <Link href="/account/login" className="text-gray-600">Login</Link>
+              <Link href="/account/signup" className="text-gray-600">Register</Link>
               <button
                 className="bg-orange-500 text-white py-2 px-4 rounded-md flex space-x-2 items-center"
                 onClick={handleRoom}

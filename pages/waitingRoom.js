@@ -11,6 +11,7 @@ const WaitingRoom = () => {
   const [videoOptions, setVideoOptions] = useState({
     audio: true,
     video: {
+      enabled: true,
       facingMode: "user",
       deviceId: "",
     },
@@ -34,15 +35,17 @@ const WaitingRoom = () => {
   const videoToggle = () => {
     setVideoOptions(
       produce((draft) => {
-        draft.video = !draft.video;
+        draft.video.enabled = !draft.video.enabled;
       })
     );
   };
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia(videoOptions).then((stream) => {
-      setStream(stream);
-      streamRef.selfStream.current.srcObject = stream;
+    navigator.mediaDevices.getUserMedia(videoOptions).then((mediaStream) => {
+      setStream(mediaStream);
+      if (streamRef.selfStream?.current) {
+        streamRef.selfStream.current.srcObject = mediaStream;
+      }
     });
 
     (async () => {
@@ -53,18 +56,20 @@ const WaitingRoom = () => {
 
       setVideoDevices(availableVideo);
     })();
-  }, [videoOptions]);
+  }, [videoOptions, setStream, streamRef.selfStream]);
 
   const { room } = router.query;
 
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        setStream(stream);
-        streamRef.selfStream.current.srcObject = stream;
+      .then((mediaStream) => {
+        setStream(mediaStream);
+        if (streamRef.selfStream?.current) {
+          streamRef.selfStream.current.srcObject = mediaStream;
+        }
       });
-  }, [callAccepted]);
+  }, [callAccepted, setStream, streamRef.selfStream]);
 
   const handleCallUser = () => {
     callUser(room);

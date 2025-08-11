@@ -15,7 +15,7 @@ const Settings = () => {
 
   useEffect(() => {
     dispatch(getProfile());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (profileInfo && Object.keys(profileInfo).length !== 0) {

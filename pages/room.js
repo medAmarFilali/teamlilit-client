@@ -75,10 +75,12 @@ const Room = () => {
   };
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia(videoOptions).then((stream) => {
+    navigator.mediaDevices.getUserMedia(videoOptions).then((mediaStream) => {
       if (videoOptions.video.enabled) {
-        setStream(stream);
-        streamRef.selfStream.current.srcObject = stream;
+        setStream(mediaStream);
+        if (streamRef.selfStream?.current) {
+          streamRef.selfStream.current.srcObject = mediaStream;
+        }
       }
     });
 
@@ -90,13 +92,13 @@ const Room = () => {
 
       setVideoDevices(availableVideo);
     })();
-  }, [videoOptions]);
+  }, [videoOptions, setStream, streamRef.selfStream]);
 
   useEffect(() => {
-    if (callStream) {
+    if (callStream && streamRef.otherStream?.current) {
       streamRef.otherStream.current.srcObject = callStream;
     }
-  }, [callStream]);
+  }, [callStream, streamRef.otherStream]);
 
   const roomLink = roomId
     ? `${process.env.NEXT_PUBLIC_CLIENT_URL}/waitingRoom?room=${roomId}`
@@ -146,9 +148,7 @@ const Room = () => {
           </button> */}
           <button
             className="rounded-full bg-gray-600 p-3 hover:bg-gray-700"
-            onClick={() =>
-              setSettingsDialog((prevState) => (settingsDialog = !prevState))
-            }
+            onClick={() => setSettingsDialog((prev) => !prev)}
           >
             <CogIcon className="w-6 h-6" />
           </button>

@@ -1,9 +1,13 @@
+import Image from "next/image";
+
 const ProfileImage = ({ profileImage }) => {
   return (
-    <img
+    <Image
       src={profileImage}
-      alt=""
+      alt="Profile image"
       className="w-full h-full rounded-full object-cover"
+      width={128}
+      height={128}
     />
   );
 };
