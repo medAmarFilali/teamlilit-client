@@ -19,13 +19,11 @@ const Intro = () => {
                 community, create opportunity
               </p>
               <div className="flex mt-4 flex-wrap flex-col ">
-                <Link href="/room">
-                  <a className="flex justify-center md:justify-start">
-                    <button className="bg-orange-500 p-3 md:py-4 md:px-4 rounded-md flex space-x-2 items-center text-white">
-                      <VideoCameraIcon className="h-5 w-5" />
-                      <p>New Meeting</p>
-                    </button>
-                  </a>
+                <Link href="/room" className="flex justify-center md:justify-start">
+                  <button className="bg-orange-500 p-3 md:py-4 md:px-4 rounded-md flex space-x-2 items-center text-white">
+                    <VideoCameraIcon className="h-5 w-5" />
+                    <p>New Meeting</p>
+                  </button>
                 </Link>
                 <div className="divide-y mt-4">
                   <hr />
@@ -36,13 +34,11 @@ const Intro = () => {
                     placeholder="Meeting ID"
                     className="border focus:outline-none p-3 md:p-4 rounded-md mt-4 w-full lg:w-1/2"
                   />
-                  <Link href="/waitingRoom">
-                    <a className="mt-4 w-full lg:w-1/2 flex justify-center ">
-                      <button className="btn-contained-left">
-                        <LinkIcon className="h-5 w-5" />
-                        <p>Join Meeting</p>
-                      </button>
-                    </a>
+                  <Link href="/waitingRoom" className="mt-4 w-full lg:w-1/2 flex justify-center ">
+                    <button className="btn-contained-left">
+                      <LinkIcon className="h-5 w-5" />
+                      <p>Join Meeting</p>
+                    </button>
                   </Link>
                 </div>
               </div>
@@ -53,8 +49,9 @@ const Intro = () => {
               <Image
                 src="/introimage.png"
                 alt="responsive"
-                width="600px"
-                height="530px"
+                width={600}
+                height={530}
+                priority
               />
             </div>
           </div>

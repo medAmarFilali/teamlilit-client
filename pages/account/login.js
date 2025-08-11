@@ -19,10 +19,10 @@ const Login = () => {
   const mobileMenu = useSelector((state) => state.menu.mobileMenu);
 
   useEffect(() => {
-    if (router.query) {
-      setNext(router.query.next);
+    if (router.query && router.query.next) {
+      setNext(String(router.query.next));
     }
-  }, []);
+  }, [router.query]);
 
   const handleChange = (e) => {
     setUserData(
